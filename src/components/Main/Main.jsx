@@ -31,12 +31,12 @@ console.log(cards);
 
 function Main() {
   const [popup, setPopup] = useState(null);
+  const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
   const newProfilePopup = { title: "Editar Perfil", children: <EditProfile /> };
   const newAvatarPopup = {
     title: "Cambiar foto de perfil",
     children: <EditAvatar />,
   };
-  const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
 
   function handleOpenPopup(popup) {
     setPopup(popup);
