@@ -20,7 +20,7 @@ export default function Card(props) {
     <li className="card">
       <img
         src={link}
-        alt="Imagen del Lugar"
+        alt={name}
         className="card__image"
         onClick={() => handleOpenPopup(imageComponent)}
       />
