@@ -1,5 +1,5 @@
 import trashButton from "../../../../images/cards/trash.svg";
-import Confirmation from "../Confirmation/Confirmation.jsx";
+import ConfirmationPopup from "../Confirmation/Confirmation.jsx";
 import ImagePopup from "../ImagePopup/ImagePopup.jsx";
 
 export default function Card(props) {
@@ -13,8 +13,13 @@ export default function Card(props) {
 
   const confirmationComponent = {
     title: "¿Estás seguro/a?",
-    children: <Confirmation />,
+    children: <ConfirmationPopup />,
   };
+
+  // Verifica si el usuario actual le ha dado "like" a la tarjeta
+  const cardLikeButtonClassName = `card__like-btn ${
+    isLiked ? "card__like-btn_is-active" : ""
+  }`;
 
   return (
     <li className="card">
@@ -36,7 +41,7 @@ export default function Card(props) {
       </button>
       <div className="card__info">
         <h2 className="card__name">{name}</h2>
-        <button className="card__like-btn"></button>
+        <button className={cardLikeButtonClassName}></button>
       </div>
     </li>
   );
