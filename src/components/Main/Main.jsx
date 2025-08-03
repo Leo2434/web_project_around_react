@@ -24,6 +24,7 @@ function Main() {
       .getInitialCards()
       .then((res) => {
         setCards(res);
+        // console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -34,9 +35,37 @@ function Main() {
 
   const handleClosePopup = useCallback(() => {
     setPopup(null);
-  }, []); //vuelve a crear esta función solo si alguna de sus dependencias cambia (en este caso, ninguna)
+  }, []); //Se vuelve a crear esta función solo si alguna de sus dependencias cambia (en este caso, ninguna)
 
   const currentUser = useContext(CurrentUserContext);
+
+  async function handleCardLike(card) {
+    // Verifica una vez más si a esta tarjeta ya le has dado like
+    const isLiked = card.isLiked;
+    // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
+    await api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((cards) =>
+          cards.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
+  async function handleCardDelete(card) {
+    // Envía una solicitud a la API y excluye la tarjeta eliminada
+    await api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((cards) =>
+          cards.filter((currentCard) => currentCard._id !== card._id)
+        );
+      })
+      .catch((error) => console.error(error));
+  }
 
   return (
     <main className="container">
@@ -97,6 +126,8 @@ function Main() {
                 key={card._id}
                 card={card}
                 handleOpenPopup={handleOpenPopup}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
               />
             ))}
         </ul>

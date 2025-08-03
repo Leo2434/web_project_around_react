@@ -3,7 +3,7 @@ import ConfirmationPopup from "../Confirmation/Confirmation.jsx";
 import ImagePopup from "../ImagePopup/ImagePopup.jsx";
 
 export default function Card(props) {
-  const { handleOpenPopup, card } = props;
+  const { handleOpenPopup, card, onCardLike, onCardDelete } = props;
   const { name, link, isLiked } = card;
 
   const imageComponent = {
@@ -21,6 +21,14 @@ export default function Card(props) {
     isLiked ? "card__like-btn_is-active" : ""
   }`;
 
+  function handleLikeClick(card) {
+    onCardLike(card);
+  }
+
+  function handleDeleteClick(card) {
+    onCardDelete(card);
+  }
+
   return (
     <li className="card">
       <img
@@ -31,7 +39,8 @@ export default function Card(props) {
       />
       <button
         className="card__trash-btn"
-        onClick={() => handleOpenPopup(confirmationComponent)}
+        onClick={() => handleDeleteClick(card)}
+        // onClick={() => handleOpenPopup(confirmationComponent)}
       >
         <img
           src={trashButton}
@@ -41,7 +50,10 @@ export default function Card(props) {
       </button>
       <div className="card__info">
         <h2 className="card__name">{name}</h2>
-        <button className={cardLikeButtonClassName}></button>
+        <button
+          className={cardLikeButtonClassName}
+          onClick={() => handleLikeClick(card)}
+        ></button>
       </div>
     </li>
   );

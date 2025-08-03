@@ -96,6 +96,14 @@ class Api {
     });
   }
 
+  changeLikeCardStatus(id, like) {
+    if (like) {
+      return this.likeCard(id); //Dar like
+    } else {
+      return this.dislikeCard(id); //Dar dislike
+    }
+  }
+
   updateAvatar(avatar) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
