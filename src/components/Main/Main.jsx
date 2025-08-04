@@ -1,6 +1,6 @@
 import editButton from "../../images/profile/Edit_Button.svg";
 import addButton from "../../images/profile/Add_Button.svg";
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Popup from "./components/Popup/Popup.jsx";
 import NewCard from "./components/NewCard/NewCard.jsx";
 import EditProfile from "./components/EditProfile/EditProfile.jsx";
@@ -9,8 +9,7 @@ import Card from "./components/Card/Card.jsx";
 import api from "../../utils/api.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
-function Main() {
-  const [popup, setPopup] = useState(null);
+function Main({ onOpenPopup, onClosePopup, popup }) {
   const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
   const newProfilePopup = { title: "Editar Perfil", children: <EditProfile /> };
   const newAvatarPopup = {
@@ -29,21 +28,13 @@ function Main() {
       .catch((err) => console.log(err));
   }, []);
 
-  function handleOpenPopup(popup) {
-    setPopup(popup);
-  }
+  const { currentUser } = useContext(CurrentUserContext);
 
-  const handleClosePopup = useCallback(() => {
-    setPopup(null);
-  }, []); //Se vuelve a crear esta función solo si alguna de sus dependencias cambia (en este caso, ninguna)
-
-  const currentUser = useContext(CurrentUserContext);
-
-  async function handleCardLike(card) {
+  function handleCardLike(card) {
     // Verifica una vez más si a esta tarjeta ya le has dado like
     const isLiked = card.isLiked;
     // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
-    await api
+    api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((cards) =>
@@ -55,9 +46,9 @@ function Main() {
       .catch((error) => console.error(error));
   }
 
-  async function handleCardDelete(card) {
+  function handleCardDelete(card) {
     // Envía una solicitud a la API y excluye la tarjeta eliminada
-    await api
+    api
       .deleteCard(card._id)
       .then(() => {
         setCards((cards) =>
@@ -82,7 +73,7 @@ function Main() {
                 className="profile__avatar-btn"
                 type="button"
                 id="avatar-open-btn"
-                onClick={() => handleOpenPopup(newAvatarPopup)}
+                onClick={() => onOpenPopup(newAvatarPopup)}
               ></button>
             </div>
           </div>
@@ -93,7 +84,7 @@ function Main() {
                 className="profile__open-btn"
                 type="button"
                 id="profile-open-btn"
-                onClick={() => handleOpenPopup(newProfilePopup)}
+                onClick={() => onOpenPopup(newProfilePopup)}
               >
                 <img
                   src={editButton}
@@ -108,7 +99,7 @@ function Main() {
             className="profile__card-btn"
             type="button"
             id="card-open-btn"
-            onClick={() => handleOpenPopup(newCardPopup)}
+            onClick={() => onOpenPopup(newCardPopup)}
           >
             <img
               src={addButton}
@@ -125,7 +116,7 @@ function Main() {
               <Card
                 key={card._id}
                 card={card}
-                handleOpenPopup={handleOpenPopup}
+                handleOpenPopup={onOpenPopup}
                 onCardLike={handleCardLike}
                 onCardDelete={handleCardDelete}
               />
@@ -134,7 +125,7 @@ function Main() {
       </section>
       {popup && (
         <Popup
-          onClose={handleClosePopup}
+          onClose={onClosePopup}
           title={popup.title}
           children={popup.children}
         ></Popup>

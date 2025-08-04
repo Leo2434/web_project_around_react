@@ -28,7 +28,7 @@ class Api {
     });
   }
 
-  updateUserInfo(name, about) {
+  updateUserInfo({ name, about }) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.headers,
@@ -104,7 +104,7 @@ class Api {
     }
   }
 
-  updateAvatar(avatar) {
+  updateAvatar({ avatar }) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.headers,
