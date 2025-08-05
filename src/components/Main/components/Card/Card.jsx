@@ -1,8 +1,11 @@
 import trashButton from "../../../../images/cards/trash.svg";
 import ConfirmationPopup from "../Confirmation/Confirmation.jsx";
 import ImagePopup from "../ImagePopup/ImagePopup.jsx";
+import { CurrentUserContext } from "../../../../contexts/CurrentUserContext.js";
 
 export default function Card(props) {
+  const { currentUser } = useContext(CurrentUserContext); // Obtiene el objeto currentUser
+
   const { handleOpenPopup, card, onCardLike, onCardDelete } = props;
   const { name, link, isLiked } = card;
 
@@ -13,7 +16,7 @@ export default function Card(props) {
 
   const confirmationComponent = {
     title: "¿Estás seguro/a?",
-    children: <ConfirmationPopup />,
+    children: <ConfirmationPopup onCardDelete={onCardDelete} id={card._id} />,
   };
 
   // Verifica si el usuario actual le ha dado "like" a la tarjeta
@@ -23,10 +26,6 @@ export default function Card(props) {
 
   function handleLikeClick(card) {
     onCardLike(card);
-  }
-
-  function handleDeleteClick(card) {
-    onCardDelete(card);
   }
 
   return (
@@ -39,8 +38,7 @@ export default function Card(props) {
       />
       <button
         className="card__trash-btn"
-        onClick={() => handleDeleteClick(card)}
-        // onClick={() => handleOpenPopup(confirmationComponent)}
+        onClick={() => handleOpenPopup(confirmationComponent)}
       >
         <img
           src={trashButton}

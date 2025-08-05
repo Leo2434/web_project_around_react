@@ -14,7 +14,7 @@ export default function EditAvatar() {
   }
 
   return (
-    <form className="form" id="card-form" noValidate onSubmit={handleSubmit}>
+    <form className="form" id="avatar-form" noValidate onSubmit={handleSubmit}>
       <fieldset className="form__fieldset">
         <input
           className="form__input"

@@ -44,7 +44,7 @@ class Api {
     });
   }
 
-  createCard(name, link) {
+  createCard({ name, link }) {
     return fetch(`${this.baseUrl}/cards`, {
       method: "POST",
       headers: this.headers,
