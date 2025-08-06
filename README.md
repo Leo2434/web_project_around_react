@@ -43,7 +43,7 @@ La segunda entrega del proyecto se enfoca en la funcionalidad de la pagina, en d
 
 ### Cosas aprendidas en la segunda parte:
 
-1. Adquirí un mejor entendimiento sobre la Sintaxis SJX para escribir componentes y la lógica de los cambios de estado, especialmente en lo que respecta al manejo de controladores y props.
+1. Adquirí un mejor entendimiento sobre la Sintaxis JSX para escribir componentes y la lógica de los cambios de estado, especialmente en lo que respecta al manejo de controladores y props.
 
 2. Aprendí el uso de distintos hooks para implementar varias funciones que facilitaron la interacción con los elementos html, como por ejemplo las refs, los contextos, los efectos y los levantamientos de estado.
 

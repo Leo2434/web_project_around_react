@@ -1,11 +1,8 @@
 import trashButton from "../../../../images/cards/trash.svg";
 import ConfirmationPopup from "../Confirmation/Confirmation.jsx";
 import ImagePopup from "../ImagePopup/ImagePopup.jsx";
-import { CurrentUserContext } from "../../../../contexts/CurrentUserContext.js";
 
 export default function Card(props) {
-  const { currentUser } = useContext(CurrentUserContext); // Obtiene el objeto currentUser
-
   const { handleOpenPopup, card, onCardLike, onCardDelete } = props;
   const { name, link, isLiked } = card;
 
